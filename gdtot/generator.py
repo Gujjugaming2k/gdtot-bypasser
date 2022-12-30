@@ -5,8 +5,12 @@ from urllib.parse import parse_qs
 
 import requests
 from bs4 import BeautifulSoup
+from os.path import join, dirname
+from dotenv import load_dotenv
 
 from gdtot import default_cookies, gdown_base_url
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 
 def GDTOT(url: str, cookies: dict) -> str:
@@ -93,5 +97,5 @@ def get_links(link, cookies):
         drive_link, filename = GDTOT(link, cookies=cookies)
     except Exception as err:
         raise ValueError(str(err))
-    direct_link = gdown_base_url + getIdFromUrl(drive_link)
+    direct_link = gdown_base_url + filename
     return drive_link, direct_link, filename
